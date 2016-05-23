@@ -542,3 +542,6 @@ function capitalize_archive_title( $title ) {
 
 /*** SOCIAL EVERYTHING ***/
 include_once "social.php";
+
+/*** STRUCTURED DATA ***/
+include_once "structured-data.php";
