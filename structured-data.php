@@ -1,5 +1,16 @@
 <?php
 
+// Rimuoviamo la classe hentry (dati microformats.org)
+function lib_remove_hentry_class( $classes ) {
+    $count = count($classes);
+    for ($i = 0; $i < $count; $i++) {
+    	if ($classes[$i] == "hentry")
+    		$classes[$i] = "entry";
+    }
+    return $classes;
+}
+add_filter( 'post_class', 'lib_remove_hentry_class' );
+
 function get_post_structured_data($post) {
 
 	setup_postdata($post);
@@ -135,7 +146,7 @@ function lib_structured_data($html) {
 			$structured_data["hasPart"] = $posts_structured_data;
 		}
 
-	} else {
+	} else if (count($posts_structured_data) > 0) {
 		$structured_data += $posts_structured_data[0];
 	}
 
