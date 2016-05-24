@@ -540,6 +540,19 @@ function capitalize_archive_title( $title ) {
 		return ucfirst($title);
 }
 
+// WP non aggiunge l'attr srcset alle GIF full size perché di default le altre dimensioni sono flattened.
+// Noi però abbiamo già un plugin per evitare quella cosa, e l'srcset ci serve. Quindi in questo filtro
+// togliamo il mime type ai metadati dell'immagine.
+// (cfr. wp_calculate_image_srcset(), wp-includes/media.php:1010 e https://core.trac.wordpress.org/ticket/34528)
+add_filter('wp_calculate_image_srcset_meta', 'lib_remove_gif_mime_for_srcset', 10, 4);
+function lib_remove_gif_mime_for_srcset($image_meta, $size_array, $image_src, $attachment_id) {
+	if (isset($image_meta['sizes']['thumbnail']['mime-type'])) {
+		if ($image_meta['sizes']['thumbnail']['mime-type'] === "image/gif")
+			unset($image_meta['sizes']['thumbnail']['mime-type']);
+	}
+	return $image_meta;
+}
+
 /*** SOCIAL EVERYTHING ***/
 include_once "social.php";
 
