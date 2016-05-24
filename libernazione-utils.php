@@ -16,6 +16,10 @@ add_action("wp_enqueue_scripts", "lib_scripts");
 function lib_scripts() {
 	wp_register_script("sidebar-async", plugin_dir_url( __FILE__ ) . "js/sidebar.js", "jquery", "1.0", true);
 	wp_enqueue_script("sidebar-async");
+
+	// https://github.com/madgex/lazy-ads
+	wp_register_script("lazyad-async", plugin_dir_url( __FILE__ ) . "js/lazyad-loader.min.js", array(), "1.0", true);
+	wp_enqueue_script("lazyad-async");	
 }
 
 /**
@@ -382,37 +386,73 @@ function show_adv() {
 
 function print_adv($type) {
 	if (show_adv()) { ?>
-		<div class="adv">
-			<!-- Good Move Advertising -->
+		<div class="adv ad" data-lazyad>
+		<!-- Good Move Advertising -->
 		<?php if ($type == "skin") {
 			if (is_home()) { ?>
 				<!-- Tag for LIB-HME Home Background Skin placement -->
-				<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94304"></script>
+				<script type="text/lazyad">
+      				<!--
+      					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94304"></script>
+      				-->
+      			</script>
 			<?php } else { ?>
 				<!-- Tag for LIB-INT Internal Pages Background Skin placement -->
-				<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94307"></script>
+				<script type="text/lazyad">
+      				<!--
+      					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94307"></script>
+      				-->
+      			</script>
 				<!-- Tag for LIB-INT Internal Pages Interstitial placement -->
-				<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94310"></script>
+				<script type="text/lazyad">
+      				<!--
+      					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94310"></script>
+      				-->
+      			</script>
 			<?php }
 		} else if ($type == "strip") {
 			if (is_home()) { ?>
 				<!-- Tag for LIB-HME Home Billboard Area placement -->
-				<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94305"></script>
+				<script type="text/lazyad">
+      				<!--
+      					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94305"></script>
+      				-->
+      			</script>
 			<?php } else { ?>
 				<!-- Tag for LIB-INT Internal Pages Billboard Area placement -->
-				<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94308"></script>
+				<script type="text/lazyad">
+      				<!--
+      					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94308"></script>
+      				-->
+      			</script>
 			<?php }
 		} else if ($type == "sidebar-top") { ?>
 			<!-- Tag for LIB-INT Internal Pages Med Rec Area placement -->
-			<script  type="text/javascript" src="http://adx.adform.net/adx/?mid=94309"></script>
+			<script type="text/lazyad">
+  				<!--
+  					<script  type="text/javascript" src="http://adx.adform.net/adx/?mid=94309"></script>
+  				-->
+  			</script>
 		<?php } else if ($type == "sidebar-bottom") { ?>
 			<!-- Tag for LIB-INT Internal Pages Med Rec Area 2 placement -->
-			<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94316"></script>
+			<script type="text/lazyad">
+  				<!--
+  					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94316"></script>
+  				-->
+  			</script>
 		<?php } else if ($type == "home-1") { ?>
 			<!-- Tag for LIB-HME Home Med Rec Area placement -->
-			<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94306"></script>
+			<script type="text/lazyad">
+  				<!--
+  					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94306"></script>
+  				-->
+  			</script>
 		<?php } else if ($type == "home-2") { ?>
-			<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94315"></script>
+			<script type="text/lazyad">
+  				<!--
+  					<script type="text/javascript" src="http://adx.adform.net/adx/?mid=94315"></script>
+  				-->
+  			</script>
 		<?php } ?>
 		</div>
 	<?php }
@@ -552,6 +592,8 @@ function lib_remove_gif_mime_for_srcset($image_meta, $size_array, $image_src, $a
 	}
 	return $image_meta;
 }
+
+
 
 /*** SOCIAL EVERYTHING ***/
 include_once "social.php";
