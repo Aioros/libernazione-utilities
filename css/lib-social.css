@@ -1,0 +1,11 @@
+.social-placeholder {
+	width: 245px;
+	height: 30px;
+	background-image: url('../img/social-placeholder.png');
+	background-repeat: no-repeat;
+    background-position: 0 6px;
+}
+
+.entry-content .social-buttons>div.social-button {
+	display: none;
+}
