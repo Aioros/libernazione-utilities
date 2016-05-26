@@ -166,66 +166,6 @@ function bones_print_twitter_card() {
     echo $out;
 }
 
-// Social scripts in <head>
-add_filter("wp_print_footer_scripts", "lib_social_scripts");
-function lib_social_scripts() {
-    ?>
-<script>
-// Ritorna una funzione che carica uno script esterno e lo inserisce prima del primo script in pagina (fisso)
-var loadScript = (function(firstScript) {
-  return function(src, onload) {
-    var script = document.createElement('script');
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-    script.onload = onload;
-  }
-}(document.getElementsByTagName('script')[0]));
-
-var loaded = 0;
-var checkSocialReady = function() {
-    if (loaded == document.getElementsByClassName("social-button").length) {
-        setTimeout(function() {
-            console.log("going");
-            var placeholders = document.getElementsByClassName("social-placeholder");
-            placeholders[0].style.display = "none";
-            var buttons = document.getElementsByClassName("social-button");
-            for (var i=0; i<buttons.length; i++)
-                buttons[i].style.display = "inline-block";
-            var socialButtons = document.getElementsByClassName("social-buttons");
-            var html = socialButtons[0].innerHTML;
-            for (var i=1; i<socialButtons.length; i++)
-                socialButtons[i].innerHTML = html;
-        }, 300);
-    }
-}
-
-window.onload = function() {
-    loadScript('https://platform.twitter.com/widgets.js', function() {
-        twttr.events.bind('loaded', function(response) {
-            loaded++;
-            console.log(loaded);
-            checkSocialReady();
-        });
-    });
-    loadScript('//connect.facebook.net/en_US/all.js#xfbml=1&appId=370346486491395', function() {
-        FB.Event.subscribe('xfbml.render', function(response) {
-            loaded++;
-            console.log(loaded);
-            checkSocialReady();
-        });
-    });
-    loadScript('https://apis.google.com/js/platform.js', function() {
-        gapi.loaded_0 = function() {
-            loaded++;
-            console.log(loaded);
-            checkSocialReady();
-        }
-    });
-};
-</script>
-    <?php
-}
-
 add_filter("wp_head", "lib_social_meta");
 function lib_social_meta() {
 // Open Graph, Twitter Cards
@@ -236,13 +176,14 @@ function lib_social_meta() {
 // Social buttons
 // Not sure about this all, but I didn't like injecting them into the content with a filter.
 // Now they are included in the template, but this couples theme and plugin.
-function lib_social_buttons($placeholder_only = false) {
+function lib_social_buttons($position = "top") {
     wp_enqueue_style("lib-social", plugins_url('css/lib-social.css', __FILE__));
+    wp_enqueue_script("lib-social", plugins_url('js/social.js', __FILE__), array("jquery"), '', true);
     ob_start();
     ?>
+    <div class="social-buttons-placeholder" data-position="<?php echo $position; ?>"></div>
+    <?php if ($position == "top") { ?>
     <div class="social-buttons clearfix">
-        <div class="social-placeholder"></div>
-        <?php if (!$placeholder_only) { ?>
         <div class="social-button fb-button">
             <div class="fb-like" data-href="<?php the_permalink(); ?>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
         </div>
@@ -252,8 +193,8 @@ function lib_social_buttons($placeholder_only = false) {
         <div class="social-button gp-button">
             <div class="g-plusone" data-size="tall" data-annotation="none"></div>
         </div>
-        <?php } ?>
     </div> <!-- .social-buttons -->
+    <?php } ?>
     <?php
     $social_buttons = ob_get_contents();
     ob_end_clean();

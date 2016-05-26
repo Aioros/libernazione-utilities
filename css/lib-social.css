@@ -1,11 +1,28 @@
-.social-placeholder {
-	width: 245px;
-	height: 30px;
-	background-image: url('../img/social-placeholder.png');
-	background-repeat: no-repeat;
-    background-position: 0 6px;
+.social-buttons-placeholder {
+
 }
 
-.entry-content .social-buttons>div.social-button {
+.social-button {
+	height: 20px;
+	background-image: url('../img/social-placeholder.png');
+	background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+.fb-button {
+	width: 79px;
+}
+
+.tw-button {
+	width: 60px;
+	background-position: -107px 0;
+}
+
+.tw-button a {
 	display: none;
+}
+
+.gp-button {
+	width: 50px;
+    background-position: -195px 0;
 }
