@@ -168,9 +168,14 @@ function bones_print_twitter_card() {
 
 add_filter("wp_head", "lib_social_meta");
 function lib_social_meta() {
-// Open Graph, Twitter Cards
+    // Open Graph, Twitter Cards
     bones_print_open_graph_tags();
     bones_print_twitter_card();
+}
+
+add_filter("wp_enqueue_scripts", "lib_enqueue_social_script");
+function lib_enqueue_social_script() {
+    wp_enqueue_script("lib-social", plugins_url('js/social.js', __FILE__), array("jquery"), '', true);
 }
 
 // Social buttons
@@ -178,7 +183,6 @@ function lib_social_meta() {
 // Now they are included in the template, but this couples theme and plugin.
 function lib_social_buttons($position = "top") {
     wp_enqueue_style("lib-social", plugins_url('css/lib-social.css', __FILE__));
-    wp_enqueue_script("lib-social", plugins_url('js/social.js', __FILE__), array("jquery"), '', true);
     ob_start();
     ?>
     <div class="social-buttons-placeholder" data-position="<?php echo $position; ?>"></div>
