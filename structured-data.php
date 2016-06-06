@@ -19,7 +19,9 @@ function get_post_structured_data($post) {
 	$link = get_permalink($post);
 	$headline = get_the_title($post);
 	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full' );
-	$comments = get_comments(array('post_id' => $post->ID));
+	$comments = array();
+	if (is_single())
+		$comments = get_comments(array('post_id' => $post->ID));
 	$author_image = get_avatar_url( get_the_author_meta( 'user_email' ), 96 );
 
 	$structured_data = array(
