@@ -182,7 +182,7 @@ function lib_enqueue_social_script() {
 // Not sure about this all, but I didn't like injecting them into the content with a filter.
 // Now they are included in the template, but this couples theme and plugin.
 function lib_social_buttons($position = "top") {
-    wp_enqueue_style("lib-social", plugins_url('css/lib-social.css', __FILE__));
+    //wp_enqueue_style("lib-social", plugins_url('css/lib-social.css', __FILE__));
     ob_start();
     ?>
     <div class="social-buttons-placeholder" data-position="<?php echo $position; ?>"></div>
