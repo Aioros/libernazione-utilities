@@ -595,6 +595,44 @@ function lib_remove_gif_mime_for_srcset($image_meta, $size_array, $image_src, $a
 	return $image_meta;
 }
 
+// Opzioni utente
+add_action( 'show_user_profile', 'lib_show_extra_profile_fields' );
+add_action( 'edit_user_profile', 'lib_show_extra_profile_fields' );
+
+function lib_show_extra_profile_fields( $user ) {
+	$it_shortcuts = get_user_meta($user->ID, "it_shortcuts", true);
+	?>
+	<h3>Opzioni extra</h3>
+	<table class="form-table">
+		<tr>
+			<th scope="row">Shortcut dell'editor</label></th>
+			<td>
+				<label for="it_shortcuts">
+					<input type="checkbox" name="it_shortcuts" id="it_shortcuts" <?php if ($it_shortcuts) echo 'checked '; ?>value="1" />
+					Usa shortcut italiani per grassetto (Ctrl-G) e corsivo (Ctrl-C)
+				</label>
+			</td>
+		</tr>
+	</table>
+<?php }
+
+add_action( 'personal_options_update', 'lib_save_extra_profile_fields' );
+add_action( 'edit_user_profile_update', 'lib_save_extra_profile_fields' );
+
+function lib_save_extra_profile_fields( $user_id ) {
+	if ( !current_user_can( 'edit_user', $user_id ) )
+		return false;
+	update_usermeta( $user_id, 'it_shortcuts', $_POST['it_shortcuts'] );
+}
+
+add_action( 'after_wp_tiny_mce', 'lib_tinymce_shortcuts_admin_script', 10 );
+
+function lib_tinymce_shortcuts_admin_script() {
+	$it_shortcuts = get_user_meta(get_current_user_id(), "it_shortcuts", true);
+	if ($it_shortcuts)
+		printf('<script type="text/javascript" src="%s"></script', plugin_dir_url( __FILE__ ) . "js/lib-tinymce-shortcuts.js");
+}
+
 /*** SOCIAL EVERYTHING ***/
 include_once "social.php";
 
