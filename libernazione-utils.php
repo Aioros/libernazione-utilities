@@ -512,7 +512,9 @@ function lib_taxonomy_tree($menu_items, $args) {
 			$limit = 30;
 
 			foreach ($terms as $term) {
-				if (!in_array(strtolower($term->name), array("uncategorized", "senza categoria"))) {
+				$term_meta = get_term_meta($term->term_id, "lib_data", true);
+				$private = isset($term_meta["private"]) && $term_meta["private"];
+				if (!in_array(strtolower($term->name), array("uncategorized", "senza categoria")) && !$private) {
 					$menu_items[] = (object) array(
 						"ID"				=> $term->term_id + 1000000000,
 						"title"				=> $term->name,
@@ -593,10 +595,11 @@ function lib_remove_gif_mime_for_srcset($image_meta, $size_array, $image_src, $a
 	return $image_meta;
 }
 
-
-
 /*** SOCIAL EVERYTHING ***/
 include_once "social.php";
 
 /*** STRUCTURED DATA ***/
 include_once "structured-data.php";
+
+/*** PRIVATE AREA ***/
+include_once "private-area.php";
