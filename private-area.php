@@ -63,3 +63,8 @@ function lib_set_private_post($post_id) {
 		add_action('save_post', 'lib_set_private_post', 10, 1);
 	}
 }
+
+function lib_remove_private_protected_from_titles( $format ) {
+	return '%s';
+}
+add_filter( 'private_title_format', 'lib_remove_private_protected_from_titles' );
