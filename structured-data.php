@@ -108,7 +108,7 @@ function get_post_structured_data($post) {
 	return $structured_data;
 }
 
-//add_action("wp_head", "lib_structured_data");
+add_action("wp_head", "lib_structured_data");
 function lib_structured_data($html) {
 
 	global $wp_query;
