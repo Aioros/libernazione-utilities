@@ -550,7 +550,7 @@ function sanitize_embeds($content) {
   global $wp_embed;
 
   // old shortcodes
-  $content = preg_replace('#(<p>)?\[\s*/?youtube\s*\](</p>)?#', '', $content);
+  $content = preg_replace('#(<p\b[^>]*>)?\[\s*/?youtube\s*\](</p>)?#', "", $content);
 
   // YouTube iframes
   // e.g.: <iframe width="680" height="510" src="https://www.youtube.com/embed/3LDM20EuVzU?feature=oembed" frameborder="0" allowfullscreen></iframe>
