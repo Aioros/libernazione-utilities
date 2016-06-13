@@ -14,12 +14,13 @@ function aioros_debug($variable) {
 
 add_action("wp_enqueue_scripts", "lib_scripts");
 function lib_scripts() {
-	wp_register_script("sidebar-async", plugin_dir_url( __FILE__ ) . "js/sidebar.js", "jquery", "1.0", true);
-	wp_enqueue_script("sidebar-async");
+	wp_register_script("sidebar", plugin_dir_url( __FILE__ ) . "js/sidebar.js", "jquery", "1.0", true);
+	wp_enqueue_script("sidebar");
 
 	// https://github.com/madgex/lazy-ads
-	wp_register_script("lazyad-async", plugin_dir_url( __FILE__ ) . "js/lazyad-loader.min.js", array(), "1.0", true);
-	wp_enqueue_script("lazyad-async");	
+	// Called by the cookies part
+	//wp_register_script("lazyad", plugin_dir_url( __FILE__ ) . "js/lazyad-loader.min.js", array(), "1.0", true);
+	//wp_enqueue_script("lazyad");	
 }
 
 /**
@@ -644,3 +645,6 @@ include_once "structured-data.php";
 
 /*** PRIVATE AREA ***/
 include_once "private-area.php";
+
+/*** DAMN COOKIES ***/
+include_once "cookies.php";

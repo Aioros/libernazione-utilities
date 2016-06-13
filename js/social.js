@@ -18,11 +18,11 @@
 	  }
 	}(document.getElementsByTagName('script')[0]));
 
-	$(document).ready(function() {
+	window.libStartSocial = function() {
 		loadScript('https://platform.twitter.com/widgets.js');
 		loadScript('//connect.facebook.net/en_US/all.js#xfbml=1&appId=370346486491395');
 		loadScript('https://apis.google.com/js/platform.js');
-	});
+	};
 
 	var scrollTimer, lastScrollFireTime = 0;
 	var direction;
