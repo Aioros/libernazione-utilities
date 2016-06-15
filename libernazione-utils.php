@@ -20,7 +20,7 @@ function lib_scripts() {
 	// https://github.com/madgex/lazy-ads
 	// Called by the cookies part
 	//wp_register_script("lazyad", plugin_dir_url( __FILE__ ) . "js/lazyad-loader.min.js", array(), "1.0", true);
-	//wp_enqueue_script("lazyad");	
+	//wp_enqueue_script("lazyad");
 }
 
 /**
@@ -648,3 +648,6 @@ include_once "private-area.php";
 
 /*** DAMN COOKIES ***/
 include_once "cookies.php";
+
+/*** BETTER COMMENTS ***/
+include_once "comments.php";
