@@ -24,10 +24,10 @@ function lib_cookie_banner() {
 		<form>
 			<div class="choices">
 				<input type="checkbox" id="consent_social">
-				<label for="consent_social">Accetto i cookie per funzionalità social</label>
+				<label for="consent_social" id="text_social">Accetto i cookie per funzionalità social</label>
 				<br>
 				<input type="checkbox" id="consent_ads">
-				<label for="consent_ads">Accetto i cookie delle inserzioni pubblicitarie</label>
+				<label for="consent_ads" id="text_pub">Accetto i cookie delle inserzioni pubblicitarie</label>
 			</div>
 			<button class="consent">Invia preferenze</button>
 		</form>

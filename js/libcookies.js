@@ -3,8 +3,8 @@ function LibCookieManager() {
 
 	self.init = function() {
 
-		self.cookiesEnabled = self.checkCookiesEnabled();
-		self.adsEnabled = self.checkAdsEnabled();
+		self.cookiesEnabled = true;
+		self.adsEnabled = true;
 		self.consent = {
 			given: false,
 			choices: {
@@ -33,12 +33,12 @@ function LibCookieManager() {
 	        cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
 	        document.cookie = "testcookie=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 	    }
-	    return cookieEnabled;
+	    self.cookiesEnabled = cookieEnabled;
 	}
 
 	self.checkAdsEnabled = function() {
 		// already checked by ads.js
-		return typeof canRunAds !== "undefined";
+		self.adsEnabled = typeof canRunAds !== "undefined";
 	}
 
 	self.processConsent = function(consent) {
@@ -64,20 +64,16 @@ function LibCookieManager() {
 	var libCookies = new LibCookieManager();
 	libCookies.init();
 
-	if (!libCookies.cookiesEnabled) {
-		// The user is managing cookies on his own pretty well, we're free to go
-		libCookies.consent.given = true;
-		libCookies.consent.choices.social = true;
-		libCookies.consent.choices.ads = true;
-	}
-
 	var socialCheck = $("#consent_social");
+	var adsCheck = $("#consent_ads");
+	var consentButton = $("button.consent")
+
 	if (libCookies.consent.given) {
 		socialCheck.prop("checked", libCookies.consent.choices.social);
 	} else {
 		socialCheck.prop("checked", true);
 	}
-	var adsCheck = $("#consent_ads");
+
 	if (libCookies.adsEnabled) {
 		if (libCookies.consent.given) {
 			adsCheck.prop("checked", libCookies.consent.choices.ads);
@@ -86,9 +82,23 @@ function LibCookieManager() {
 		}
 	} else {
 		adsCheck.prop("disabled", true);
-		adsText.html("<s>" + adsText.html() + "</s><br>(inserzioni bloccate da un ad blocker)");
+		$("#text_pub").html("<s>" + $("#text_pub").text() + "</s><br>(inserzioni bloccate da un ad blocker)");
 	}
-	var consentButton = $("button.consent").click(function() {
+
+	if (!libCookies.cookiesEnabled) {
+		// The user is managing cookies on his own pretty well, we're free to go
+		libCookies.consent.given = true;
+		libCookies.consent.choices.social = true;
+		libCookies.consent.choices.ads = true;
+		socialCheck.prop("checked", false).prop("disabled", true);
+		adsCheck.prop("checked", false).prop("disabled", true);
+		consentButton.prop("disabled", true);
+
+		$("#text_social").html("<s>" + $("#text_social").text() + "</s><br>(cookies già bloccati dal browser)");
+		$("#text_pub").html("<s>" + $("#text_pub").text() + "</s><br>(cookies già bloccati dal browser)");
+	}
+
+	consentButton.click(function() {
 		var consent = {
 			social: $("#consent_social").get(0).checked,
 			ads: $("#consent_ads").get(0).checked,
