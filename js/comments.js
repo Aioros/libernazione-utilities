@@ -8,7 +8,7 @@ jQuery('document').ready(function($) {
         //serialize and store form data in a variable
         var formdata = commentform.serialize();
         //Add a status message
-        statusdiv.html('<p>Processing...</p>');
+        statusdiv.html('<p>Invio commento in corso...</p>');
         //Extract action URL from commentform
         var formurl = commentform.attr('action');
         //Post Form with data
@@ -16,6 +16,7 @@ jQuery('document').ready(function($) {
             type: 'post',
             url: formurl,
             data: formdata,
+            dataType: 'json',
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 statusdiv.html('<p class="ajax-error" >C\'è stato un errore nell\'invio del commento.</p>');
             },
@@ -33,13 +34,31 @@ jQuery('document').ready(function($) {
                         var comment = $(data.html);
                         var parentId = data.comment_parent;
 
-                        if (parentId) {
-                            target = $("#comment-" + parentId).children(".comment").last();
+                        if (parentId > 0) {
+                            var parent = $("#comment-" + parentId);
+                            var depthClass = parent.attr("class").match(/depth-(\d+)\b/);
+                            var newDepth = parseInt(depthClass[1]) + 1;
+                            depthClass = comment.attr("class").match(/depth-\d+\b/)[0];
+                            comment.removeClass(depthClass).addClass("depth-" + newDepth);
+                            var siblings = parent.children(".comment");
                         } else {
-                            target = $(".comment.depth-1").last();
+                            var parent = $(".commentlist");
+                            var siblings = $(".comment.depth-1");
                         }
-                        // Qualcosa non mi quadra. Controllare se devo spostare io la commentform prima.
-
+                        if (siblings.length > 0) {
+                            var last = siblings.last();
+                            if (last.hasClass("odd")) {
+                                comment.removeClass("odd").addClass("even");
+                            } else {
+                                comment.removeClass("even").addClass("odd");
+                            }
+                            last.after(comment);
+                        } else {
+                            parent.append(comment);
+                        }
+                        loadGravatars();
+                        // Inizia a funzionare. Mi manca il tasto reply. Controllare quando è unico commento.
+                        
                     }
 
                     commentform.find('textarea[name=comment]').val('');
