@@ -3,7 +3,8 @@
 add_action("wp_enqueue_scripts", "lib_comments_scripts");
 function lib_comments_scripts() {
 	if (is_single()) {
-		wp_enqueue_script("lib-comments", plugin_dir_url( __FILE__ ) . "js/comments.js", array("jquery"), "1.0", true);
+		wp_enqueue_script("lib-comments", plugin_dir_url( __FILE__ ) . "js/libcomments.js", array("jquery", "wp-api"), "1.0", true);
+        wp_localize_script( 'lib-comments', 'libComments', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'post_id' => get_the_ID() ) );
 	}
 }
 
@@ -39,4 +40,5 @@ function ajaxify_comments( $comment_id, $comment_approved, $comment_data ){
         exit;
     }
 }
-add_action( 'comment_post', 'ajaxify_comments', 20, 3 );
+//add_action( 'comment_post', 'ajaxify_comments', 20, 3 );
+
