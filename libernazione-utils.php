@@ -225,6 +225,7 @@ function micropost_register_type() {
 		'show_ui' => true,
 		'show_in_nav_menus' => true,
 		'show_in_menu' => true,
+		'show_in_rest' => true,
 		'query_var' => true,
 		'rewrite' => true,
 		'capability_type' => 'post',
