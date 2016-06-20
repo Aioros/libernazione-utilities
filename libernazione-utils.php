@@ -648,6 +648,3 @@ include_once "private-area.php";
 
 /*** DAMN COOKIES ***/
 include_once "cookies.php";
-
-/*** BETTER COMMENTS ***/
-include_once "comments.php";
