@@ -388,6 +388,53 @@ function show_adv() {
 
 function print_adv($type) {
 	if (show_adv()) { ?>
+		<div class="adv ad">
+		<!-- Good Move Advertising -->
+		<?php if ($type == "skin") {
+			if (is_home()) { ?>
+				<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Background_Skin placement -->
+				<script data-adfscript="adx.adform.net/adx/?mid=94307&rnd=<?php echo rand(16, 16); ?>"></script>
+				<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+			<?php } else { ?>
+				<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Background_Skin placement -->
+				<script data-adfscript="adx.adform.net/adx/?mid=94307&rnd=<?php echo rand(16, 16); ?>"></script>
+				<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+				<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Interstitial placement -->
+				<script data-adfscript="adx.adform.net/adx/?mid=94310&rnd=<?php echo rand(16, 16); ?>"></script>
+				<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+			<?php }
+		} else if ($type == "strip") {
+			if (is_home()) { ?>
+				<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Billboard_Area placement -->
+				<script data-adfscript="adx.adform.net/adx/?mid=94308&rnd=<?php echo rand(16, 16); ?>"></script>
+				<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+			<?php } else { ?>
+				<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Billboard_Area placement -->
+				<script data-adfscript="adx.adform.net/adx/?mid=94308&rnd=<?php echo rand(16, 16); ?>"></script>
+				<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+			<?php }
+		} else if ($type == "sidebar-top") { ?>
+			<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Med_Rec_Area placement -->
+			<script data-adfscript="adx.adform.net/adx/?mid=94309&rnd=<?php echo rand(16, 16); ?>"></script>
+			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+		<?php } else if ($type == "sidebar-bottom") { ?>
+			<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Med_Rec_Area_2 placement -->
+			<script data-adfscript="adx.adform.net/adx/?mid=94316&rnd=<?php echo rand(16, 16); ?>"></script>
+			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+		<?php } else if ($type == "home-1") { ?>
+			<!-- Tag for LIB-HME Home Med Rec Area placement -->
+			<script data-adfscript="adx.adform.net/adx/?mid=94306&rnd=<?php echo rand(16, 16); ?>"></script>
+			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+		<?php } else if ($type == "home-2") { ?>
+			<script data-adfscript="adx.adform.net/adx/?mid=94315&rnd=<?php echo rand(16, 16); ?>"></script>
+			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+		<?php } ?>
+		</div>
+	<?php }
+}
+
+function print_adv_old($type) {
+	if (show_adv()) { ?>
 		<div class="adv ad" data-lazyad>
 		<!-- Good Move Advertising -->
 		<?php if ($type == "skin") {
