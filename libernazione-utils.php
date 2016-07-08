@@ -403,7 +403,7 @@ function print_adv($type) {
 				<script data-adfscript="adx.adform.net/adx/?mid=94310&rnd=<?php echo rand(16, 16); ?>"></script>
 				<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
 			<?php }
-		} else if ($type == "strip") {
+		} else if ($type == "strip" && !wp_is_mobile()) {
 			if (is_home()) { ?>
 				<!-- Tag for Libernazione - LBRN-INT-Internal_Pages_Billboard_Area placement -->
 				<script data-adfscript="adx.adform.net/adx/?mid=94308&rnd=<?php echo rand(16, 16); ?>"></script>
@@ -427,6 +427,14 @@ function print_adv($type) {
 			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
 		<?php } else if ($type == "home-2") { ?>
 			<script data-adfscript="adx.adform.net/adx/?mid=94315&rnd=<?php echo rand(16, 16); ?>"></script>
+			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+		<?php } else if ($type == "top-box" && wp_is_mobile()) { ?>
+			<!-- Tag for Libernazione - LBRN-MOB-Mobile_Top_Box placement -->
+			<script data-adfscript="adx.adform.net/adx/?mid=94314&rnd=<?php echo rand(16, 16); ?>"></script>
+			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
+		<?php } else if ($type == "intext") { ?>
+			<!-- Tag for Libernazione - LBRN-INT-INTEXT_Area placement -->
+			<script data-adfscript="adx.adform.net/adx/?mid=94313&rnd=<?php echo rand(16, 16); ?>"></script>
 			<script src="//s1.adform.net/banners/scripts/adx.js" async defer></script>
 		<?php } ?>
 		</div>
